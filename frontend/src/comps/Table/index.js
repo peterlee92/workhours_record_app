@@ -3,7 +3,7 @@ import Row from './Row';
 
 export default function Table(props){
     const { data } = props;
-    const columns = ['Date', 'Team', 'Work Hours']
+    const columns = ['ID', 'Date', 'Team', 'Work Hours', 'Details']
 
     return(
         <table>
