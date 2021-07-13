@@ -7,6 +7,8 @@ export default function Row(props){
     const { data } = props;
     const [ edit, setEdit ] = useState(false);
     const [ date, setDate ] = useState(new Date(data['date']));
+    let dateInFormat = new Date(data['date']);
+    dateInFormat = `${dateInFormat.getFullYear()}-${dateInFormat.getMonth()+1}-${dateInFormat.getDate()}`;
 
     return(
         <tr>
@@ -15,12 +17,12 @@ export default function Row(props){
                     return edit ? 
                     (
                         <td>
-                            {k === 'date' && <DatePicker selected={date} onChange={(date)=>{ setDate(date) }} />}
+                            { k === 'date' && <DatePicker selected={date} onChange={( date )=>{ setDate(new Date(date)) }} />}
                         </td>
                     ) : 
                     (
                         <td>
-                            {data[k]}
+                            { k === 'date' ? dateInFormat : data[k] }
                         </td>
                     )
                 })
