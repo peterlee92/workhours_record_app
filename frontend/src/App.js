@@ -4,10 +4,11 @@ import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, ReferenceLine, Refe
   ReferenceDot, Tooltip, CartesianGrid, Legend, Brush, ErrorBar, AreaChart, Area,
   Label, LabelList, Bar, BarChart } from 'recharts';
 import styled from 'styled-components';
-import moment from 'moment';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Table from './comps/Table';
+
+import { teamList } from './util/teamListt';
 
 const InfoDiv = styled.div`
   display:flex;
@@ -20,12 +21,21 @@ const ChartDiv = styled.div`
   height: 700px;
 `;
 
+const TableContainer = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+`;
+
 const SummaryDiv = styled.div`
   flex: 1;
 `;
 
 const InputDiv = styled.div`
-
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 50px 0;
 `;
 
 
@@ -128,16 +138,21 @@ function App() {
         <InputDiv>
           Date: <DatePicker selected={selectedDate} onChange={(date)=> { setSelectedDate(new Date(date)) }} />
           Team: <select onClick={(e) => { setSelectedTeam(e.target.value) }}>
-                  <option value='null'>TEAM</option>
-                  <option value="Site Centre">Site Centre</option>
-                  <option value="Techies of Tomorrow">Techies of Tomorrow</option>
+                  {
+                    teamList.map((o,i)=>{
+                      return(
+                        <option value={o.value}>{o.name}</option>
+                      )
+                    })
+                  }
                 </select>
           Work hours: <input type="text" value={workhours} onChange={(e) => { setWorkhours(e.target.value) }} />
           Detail: <input type="text" value={detail} onChange={(e) => { setDetail(e.target.value) }} />
           <button onClick={addRecord}>Add</button>
         </InputDiv>
-
-        <Table data={tableData} />
+        <TableContainer>
+          <Table data={tableData} />
+        </TableContainer>
     </div>
   );
 }
