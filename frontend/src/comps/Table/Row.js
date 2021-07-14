@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import moment from 'moment';
+import { teamList } from '../../util/teamListt';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -17,7 +17,24 @@ export default function Row(props){
                     return edit ? 
                     (
                         <td>
-                            { k === 'date' && <DatePicker selected={date} onChange={( date )=>{ setDate(new Date(date)) }} />}
+                            { k === 'date' ? 
+                              <DatePicker selected={date} onChange={( date )=>{ setDate(new Date(date)) }} /> :
+                              k === 'id' ?
+                              data[k] :
+                              k === 'team' ?
+                              (
+                                  <select value={data[k]}>
+                                      {
+                                          teamList.map((o ,i)=>{
+                                              return(
+                                                  <option value={o.value}>{o.name}</option>
+                                              )
+                                          })
+                                      }
+                                  </select>
+                              ) :
+                              <input value={data[k]} />
+                            }
                         </td>
                     ) : 
                     (
@@ -30,8 +47,10 @@ export default function Row(props){
             { !edit && <td><button onClick={()=>{ setEdit(true) }}>Edit</button></td>}
             { edit && (
                 <>
-                <td><button>Update</button></td>
-                <td><button onClick={()=>{ setEdit(false) }}>Cancel</button></td>
+                    <td>
+                        <button>Update</button>
+                        <button onClick={()=>{ setEdit(false) }}>Cancel</button>
+                    </td>
                 </>
             ) }
             
