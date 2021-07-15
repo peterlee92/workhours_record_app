@@ -2,13 +2,48 @@ import React, { useState } from 'react';
 import { teamList } from '../../util/teamListt';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import TextField from '@material-ui/core/TextField';
+import styled from 'styled-components';
 
 export default function Row(props){
-    const { data } = props;
+    const { data, isEditIn, setIsEditIn } = props;
     const [ edit, setEdit ] = useState(false);
-    const [ date, setDate ] = useState(new Date(data['date']));
-    let dateInFormat = new Date(data['date']);
-    dateInFormat = `${dateInFormat.getFullYear()}-${dateInFormat.getMonth()+1}-${dateInFormat.getDate()}`;
+    const [ userData, setUserData ] = useState({
+        date: new Date(data['date']),
+        team: data['team'],
+        hours: data['hours'],
+        detail: data['detail']
+    })
+    const dateInFormat = `${userData.date.getFullYear()}-${userData.date.getMonth()+1}-${userData.date.getDate()}`;
+
+    const handleClickUpdate = () => {
+        
+    }
+
+    const handleClickEdit = () => {
+        if(!isEditIn){
+            setIsEditIn(true);
+            setEdit(true);
+        }
+    }
+
+    const handleClickCancel = () => {
+        setIsEditIn(false);
+        setEdit(false);
+        setUserData({
+            date: new Date(data['date']),
+            team: data['team'],
+            hours: data['hours'],
+            detail: data['detail']
+        })
+    }
+
+    const handleChange = ( key, data ) => {
+        setUserData({
+            ...userData,
+            [key]: data
+        })
+    }
 
     return(
         <tr>
@@ -18,7 +53,7 @@ export default function Row(props){
                     (
                         <td>
                             { k === 'date' ? 
-                              <DatePicker selected={date} onChange={( date )=>{ setDate(new Date(date)) }} /> :
+                              <DatePicker selected={userData.date} onChange={( date )=>{  }} /> :
                               k === 'id' ?
                               data[k] :
                               k === 'team' ?
@@ -33,7 +68,7 @@ export default function Row(props){
                                       }
                                   </select>
                               ) :
-                              <input value={data[k]} />
+                              <StyledTextField value={userData[k]} variant="outlined" onChange={(e)=>{ handleChange( k, e.target.value ) }} />
                             }
                         </td>
                     ) : 
@@ -44,12 +79,12 @@ export default function Row(props){
                     )
                 })
             }
-            { !edit && <td><button onClick={()=>{ setEdit(true) }}>Edit</button></td>}
+            { !edit && <td><button onClick={handleClickEdit}>Edit</button></td>}
             { edit && (
                 <>
                     <td>
                         <button>Update</button>
-                        <button onClick={()=>{ setEdit(false) }}>Cancel</button>
+                        <button onClick={handleClickCancel}>Cancel</button>
                     </td>
                 </>
             ) }
@@ -57,3 +92,13 @@ export default function Row(props){
         </tr>
     )
 }
+
+const StyledTextField = styled(TextField)`
+    && {
+        text-align: center;
+
+        input{
+            padding: 5px;
+        }
+    }
+`;
