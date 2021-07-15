@@ -11,8 +11,10 @@ const handleGet = async( req ) => {
 const handlePost = async( req ) => {
     switch( req.params.post ){
         case( "addrecord" ):
-            console.log('added work');
             let data = await recordHandler.addRecord( req.body );
+            return data;
+        case( "editrecord" ):
+            let data = await recordHandler.editRecord( req.body );
             return data;
     }
 }
