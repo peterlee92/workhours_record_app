@@ -3,7 +3,7 @@ import Row from './Row';
 import styled from 'styled-components';
 
 export default function Table(props){
-    const { data } = props;
+    const { data, isEditIn, setIsEditIn } = props;
     const columns = ['ID', 'Date', 'Team', 'Work Hours', 'Details']
 
     return(
@@ -24,7 +24,11 @@ export default function Table(props){
             <tbody>
                 {
                     data.map((o, i) => {
-                        return <Row data={o} />
+                        return <Row 
+                                data={o} 
+                                isEditIn={isEditIn} 
+                                setIsEditIn={setIsEditIn} 
+                                />
                     })
                 }
             </tbody>
