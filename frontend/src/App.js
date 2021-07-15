@@ -46,6 +46,7 @@ function App() {
   const [ selectedTeam, setSelectedTeam ] = useState('');
   const [ workhours, setWorkhours ] = useState('');
   const [ detail, setDetail ] = useState('');
+  const [ isEditIn, setIsEditIn ] = useState(false);
 
   const getRecords = async() => {
     let records = await ax('get', 'recordgetall');
@@ -151,7 +152,12 @@ function App() {
           <button onClick={addRecord}>Add</button>
         </InputDiv>
         <TableContainer>
-          <Table data={tableData} />
+          <Table 
+            data={tableData} 
+            isEditIn={isEditIn} 
+            setIsEditIn={setIsEditIn}
+            getRecords={getRecords}
+          />
         </TableContainer>
     </div>
   );
