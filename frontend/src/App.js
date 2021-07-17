@@ -8,7 +8,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Table from './comps/Table';
 
-import { teamList } from './util/teamListt';
+import { teamList } from './util/teamList';
 
 const InfoDiv = styled.div`
   display:flex;
@@ -53,13 +53,13 @@ function App() {
     let recordDisplay = [];
     let checkObj = {};
     for( var i = 0; i < records.length; i++ ){
-      const workhours = parseFloat(records[i].hours);
+      const workhours = parseFloat( records[i].hours );
       const team = records[i].team;
       const lastItem = recordDisplay[recordDisplay.length-1];
-      var currentDate = new Date(records[i].date);
+      var currentDate = new Date( records[i].date );
       currentDate = `${currentDate.getFullYear()}-${currentDate.getMonth()+1}-${currentDate.getDate()}`;
 
-      if(checkObj[currentDate]){
+      if( checkObj[currentDate] ){
         lastItem[team] += workhours;
       }
       else{
@@ -70,13 +70,12 @@ function App() {
         }
         dataObj[team] = workhours;
         recordDisplay.push(dataObj);
-        console.log(recordDisplay)
         checkObj[currentDate] = true;
       }
 
     }
-    setChartData(recordDisplay);
-    setTableData(records);
+    setChartData( recordDisplay );
+    setTableData( records );
   };
 
   useEffect(()=>{
@@ -142,7 +141,7 @@ function App() {
                   {
                     teamList.map((o,i)=>{
                       return(
-                        <option value={o.value}>{o.name}</option>
+                        <option key={i} value={o.value}>{o.name}</option>
                       )
                     })
                   }
