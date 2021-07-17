@@ -9,12 +9,13 @@ const handleGet = async( req ) => {
 }
 
 const handlePost = async( req ) => {
+    let data;
     switch( req.params.post ){
         case( "addrecord" ):
-            let data = await recordHandler.addRecord( req.body );
+            data = await recordHandler.addRecord( req.body );
             return data;
         case( "editrecord" ):
-            let data = await recordHandler.editRecord( req.body );
+            data = await recordHandler.editRecord( req.body );
             return data;
     }
 }
