@@ -3,7 +3,7 @@ import Row from './Row';
 import styled from 'styled-components';
 
 export default function Table(props){
-    const { data, isEditIn, setIsEditIn } = props;
+    const { data, isEditIn, setIsEditIn, getRecords } = props;
     const columns = ['ID', 'Date', 'Team', 'Work Hours', 'Details']
 
     return(
@@ -28,6 +28,8 @@ export default function Table(props){
                                 data={o} 
                                 isEditIn={isEditIn} 
                                 setIsEditIn={setIsEditIn} 
+                                key={i}
+                                getRecords={getRecords}
                                 />
                     })
                 }
